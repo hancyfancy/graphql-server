@@ -11,12 +11,12 @@ type Student {
     firstName: String!,
     lastName: String!,
     password: String!,
-    collegeId: String!
+    collegeId: ID!
 }
 
 type College {
-    id: String,
-    name: String,
-    location: String,
-    rating: Float
+    id: ID!,
+    name: String!,
+    location: String!,
+    rating: Float!
 }
