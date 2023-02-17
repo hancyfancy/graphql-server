@@ -4,7 +4,6 @@
        "firstName":"Mohtashim",
        "lastName":"Mohammad",
        "email": "mohtashim.mohammad@tutorialpoint.org",
-       "password": "pass123",
        "collegeId": "col-102"
     },
     
@@ -13,7 +12,6 @@
        "email": "kannan.sudhakaran@tutorialpoint.org",
        "firstName":"Kannan",
        "lastName":"Sudhakaran",
-       "password": "pass123",
        "collegeId": "col-101"
     },
     
@@ -22,7 +20,6 @@
        "email": "kiran.panigrahi@tutorialpoint.org",
        "firstName":"Kiran",
        "lastName":"Panigrahi",
-       "password": "pass123",
        "collegeId": "col-101"
     }
  ]

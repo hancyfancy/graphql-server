@@ -3,6 +3,7 @@ type Query  {
    student(id: ID!): Student!,
    colleges: [College!]!,
    college(id: ID!): College!,
+   collegeBy(search: CollegeParameters): [College]!,
 }
 
 type Student {
@@ -10,7 +11,6 @@ type Student {
     email: String!,
     firstName: String!,
     lastName: String!,
-    password: String!,
     collegeId: ID!
 }
 
@@ -19,4 +19,10 @@ type College {
     name: String!,
     location: String!,
     rating: Float!
+}
+
+input CollegeParameters {
+    name: String,
+    location: String,
+    rating: Float
 }
