@@ -60,7 +60,13 @@ const Query = {
             return college;
         });
     },
-    college: (parent, { id }) => db.colleges.get(id),
+    college: (parent, { id }) => {
+        const college = db.colleges.get(id);
+        college.books = college.bookIds.map((bookId) => {
+            return db.books.get(bookId);
+        });
+        return college;
+    },
     collegesBy: (parent, { search }) => {
 
         const name = search.name;
