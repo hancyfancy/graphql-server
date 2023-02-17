@@ -2,6 +2,7 @@ type Query  {
    students: [Student!]!,
    student(id: ID!): Student!,
    colleges: [College!]!,
+   college(id: ID!): College!,
 }
 
 type Student {
