@@ -1,6 +1,7 @@
 type Query  {
    test: String,
-   students: [Student!]!
+   students: [Student!]!,
+   colleges: [College!]!,
 }
 
 type Student {
@@ -10,4 +11,11 @@ type Student {
     lastName: String!,
     password: String!,
     collegeId: String!
+}
+
+type College {
+    id: String,
+    name: String,
+    location: String,
+    rating: Float
 }
