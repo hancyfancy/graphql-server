@@ -84,5 +84,25 @@ const Query = {
             return [];
         }
     },
+    books: () => db.books.list(),
+    book: (parent, { id }) => db.books.get(id),
+    booksBy: (parent, { search }) => {
+
+        const name = search.name;
+        const author = search.author;
+
+        if (name !== undefined && author !== undefined) {
+            return db.books.list().filter(clg => clg.name === name && clg.author === author);
+        }
+        else if (name !== undefined && author === undefined) {
+            return db.books.list().filter(clg => clg.name === name);
+        }
+        else if (name === undefined && author !== undefined) {
+            return db.books.list().filter(clg => clg.author === author);
+        }
+        else {
+            return [];
+        }
+    },
  }
  module.exports = {Query}

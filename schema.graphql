@@ -5,6 +5,9 @@ type Query  {
    colleges: [College!]!,
    college(id: ID!): College!,
    collegesBy(search: CollegeParameters): [College]!,
+   books: [Book!]!,
+   book(id: ID!): Book!,
+   booksBy(search: BookParameters): [Book]!,
 }
 
 type Student {
@@ -32,4 +35,15 @@ input CollegeParameters {
     name: String,
     location: String,
     rating: Float
+}
+
+type Book {
+    id: ID!,
+    name: String!,
+    author: String!
+}
+
+input BookParameters {
+    name: String,
+    author: String
 }
