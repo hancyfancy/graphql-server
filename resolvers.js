@@ -5,10 +5,12 @@ const Query = {
     student: (parent, { id }) => db.students.get(id),
     colleges: () => db.colleges.list(),
     college: (parent, { id }) => db.colleges.get(id),
-    collegeBy: (parent, { name, location, rating }) => {
-        console.log(name);
-        console.log(location);
-        console.log(rating);
+    collegeBy: (parent, { search }) => {
+
+        const name = search.name;
+        const location = search.location;
+        const rating = search.rating;
+
         if (name !== undefined && location !== undefined && rating !== undefined) {
             return db.colleges.list().filter(clg => clg.name === name && clg.location === location && clg.rating === rating);
         }
