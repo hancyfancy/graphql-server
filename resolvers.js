@@ -54,6 +54,9 @@ const Query = {
 
         return students.map((student) => {
             student.college = db.colleges.get(student.collegeId);
+            student.college.books = student.college.bookIds.map((bookId) => {
+                return db.books.get(bookId);
+            });
             return student;
         });
     },
