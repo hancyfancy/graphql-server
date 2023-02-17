@@ -1,10 +1,10 @@
 type Query  {
    students: [Student!]!,
    student(id: ID!): Student!,
-   studentBy(search: StudentParameters): [Student]!,
+   studentsBy(search: StudentParameters): [Student]!,
    colleges: [College!]!,
    college(id: ID!): College!,
-   collegeBy(search: CollegeParameters): [College]!,
+   collegesBy(search: CollegeParameters): [College]!,
 }
 
 type Student {

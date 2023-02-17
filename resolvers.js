@@ -13,7 +13,7 @@ const Query = {
         student.college = db.colleges.get(student.collegeId);
         return student;
     },
-    studentBy: (parent, { search }) => {
+    studentsBy: (parent, { search }) => {
 
         const email = search.email;
         const firstName = search.firstName;
@@ -53,7 +53,7 @@ const Query = {
     },
     colleges: () => db.colleges.list(),
     college: (parent, { id }) => db.colleges.get(id),
-    collegeBy: (parent, { search }) => {
+    collegesBy: (parent, { search }) => {
 
         const name = search.name;
         const location = search.location;
