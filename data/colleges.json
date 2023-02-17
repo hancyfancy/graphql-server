@@ -4,7 +4,7 @@
        "name": "AMU",
        "location": "Uttar Pradesh",
        "rating":5.0,
-       "library": ["bok-103", "bok-105"]
+       "bookIds": ["bok-103", "bok-105"]
     },
     
     {
@@ -12,6 +12,6 @@
        "name": "CUSAT",
        "location": "Kerala",
        "rating":4.5,
-       "library": ["bok-102", "bok-105", "bok-106"]
+       "bookIds": ["bok-102", "bok-105", "bok-106"]
     }
  ]

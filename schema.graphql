@@ -28,7 +28,8 @@ type College {
     id: ID!,
     name: String!,
     location: String!,
-    rating: Float!
+    rating: Float!,
+    books: [Book!]!
 }
 
 input CollegeParameters {

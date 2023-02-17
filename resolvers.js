@@ -51,7 +51,15 @@ const Query = {
             return student;
         });
     },
-    colleges: () => db.colleges.list(),
+    colleges: () => {
+        const colleges = db.colleges.list();
+        return colleges.map((college) => {
+            college.books = college.bookIds.map((bookId) => {
+                return db.books.get(bookId);
+            });
+            return college;
+        });
+    },
     college: (parent, { id }) => db.colleges.get(id),
     collegesBy: (parent, { search }) => {
 
