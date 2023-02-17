@@ -13,6 +13,44 @@ const Query = {
         student.college = db.colleges.get(student.collegeId);
         return student;
     },
+    studentBy: (parent, { search }) => {
+
+        const email = search.email;
+        const firstName = search.firstName;
+        const lastName = search.lastName;
+
+        let students = [];
+
+        if (email !== undefined && firstName !== undefined && lastName !== undefined) {
+            students = db.students.list().filter(clg => clg.email === email && clg.firstName === firstName && clg.lastName === lastName);
+        }
+        else if (email !== undefined && firstName === undefined && lastName === undefined) {
+            students = db.students.list().filter(clg => clg.email === email);
+        }
+        else if (email === undefined && firstName !== undefined && lastName === undefined) {
+            students = db.students.list().filter(clg => clg.firstName === firstName);
+        }
+        else if (email === undefined && firstName === undefined && lastName !== undefined) {
+            students = db.students.list().filter(clg => clg.lastName === lastName);
+        }
+        else if (email !== undefined && firstName !== undefined && lastName === undefined) {
+            students = db.students.list().filter(clg => clg.email === email && clg.firstName === firstName);
+        }
+        else if (email !== undefined && firstName === undefined && lastName !== undefined) {
+            students = db.students.list().filter(clg => clg.email === email && clg.lastName === lastName);
+        }
+        else if (email === undefined && firstName !== undefined && lastName !== undefined) {
+            students = db.students.list().filter(clg => clg.firstName === firstName && clg.lastName === lastName);
+        }
+        else {
+            return [];
+        }
+
+        return students.map((student) => {
+            student.college = db.colleges.get(student.collegeId);
+            return student;
+        });
+    },
     colleges: () => db.colleges.list(),
     college: (parent, { id }) => db.colleges.get(id),
     collegeBy: (parent, { search }) => {

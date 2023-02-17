@@ -1,6 +1,7 @@
 type Query  {
    students: [Student!]!,
    student(id: ID!): Student!,
+   studentBy(search: StudentParameters): [Student]!,
    colleges: [College!]!,
    college(id: ID!): College!,
    collegeBy(search: CollegeParameters): [College]!,
@@ -12,6 +13,12 @@ type Student {
     firstName: String!,
     lastName: String!,
     college: College!
+}
+
+input StudentParameters {
+    email: String,
+    firstName: String,
+    lastName: String
 }
 
 type College {
