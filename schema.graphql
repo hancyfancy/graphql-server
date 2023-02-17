@@ -1,5 +1,4 @@
 type Query  {
-   test: String,
    students: [Student!]!,
    student(id: ID!): Student!,
    colleges: [College!]!,
