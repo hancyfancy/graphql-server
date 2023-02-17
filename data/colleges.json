@@ -3,13 +3,15 @@
        "id": "col-101",
        "name": "AMU",
        "location": "Uttar Pradesh",
-       "rating":5.0
+       "rating":5.0,
+       "library": ["bok-103", "bok-105"]
     },
     
     {
        "id": "col-102",
        "name": "CUSAT",
        "location": "Kerala",
-       "rating":4.5
+       "rating":4.5,
+       "library": ["bok-102", "bok-105", "bok-106"]
     }
  ]

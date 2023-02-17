@@ -1,0 +1,37 @@
+[
+    {
+       "id": "bok-101",
+       "name": "Whisper in the wind",
+       "author": "LL B Gen"
+    },
+    
+    {
+        "id": "bok-102",
+        "name": "Knight and Bay",
+        "author": "Zon Drekka"
+    },
+    
+    {
+        "id": "bok-103",
+        "name": "The Last Flair Bender",
+        "author": "Manny Abuduo"
+    },
+    
+    {
+        "id": "bok-104",
+        "name": "Now You See Me",
+        "author": "Lee Chen"
+    },
+    
+    {
+        "id": "bok-105",
+        "name": "On the wild side",
+        "author": "Harriett Osbyorne"
+    },
+    
+    {
+        "id": "bok-106",
+        "name": "Empty Space",
+        "author": "Xelvudi Trilchanov"
+    }
+ ]
