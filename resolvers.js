@@ -1,8 +1,18 @@
 const db = require('./db');
 
 const Query = {
-    students: () => db.students.list(),
-    student: (parent, { id }) => db.students.get(id),
+    students: () => {
+        const students = db.students.list();
+        return students.map((student) => {
+            student.college = db.colleges.get(student.collegeId);
+            return student;
+        });
+    },
+    student: (parent, { id }) => {
+        const student = db.students.get(id);
+        student.college = db.colleges.get(student.collegeId);
+        return student;
+    },
     colleges: () => db.colleges.list(),
     college: (parent, { id }) => db.colleges.get(id),
     collegeBy: (parent, { search }) => {
