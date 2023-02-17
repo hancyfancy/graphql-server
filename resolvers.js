@@ -73,30 +73,39 @@ const Query = {
         const location = search.location;
         const rating = search.rating;
 
+        let colleges = [];
+
         if (name !== undefined && location !== undefined && rating !== undefined) {
-            return db.colleges.list().filter(clg => clg.name === name && clg.location === location && clg.rating === rating);
+            colleges = db.colleges.list().filter(clg => clg.name === name && clg.location === location && clg.rating === rating);
         }
         else if (name !== undefined && location === undefined && rating === undefined) {
-            return db.colleges.list().filter(clg => clg.name === name);
+            colleges = db.colleges.list().filter(clg => clg.name === name);
         }
         else if (name === undefined && location !== undefined && rating === undefined) {
-            return db.colleges.list().filter(clg => clg.location === location);
+            colleges = db.colleges.list().filter(clg => clg.location === location);
         }
         else if (name === undefined && location === undefined && rating !== undefined) {
-            return db.colleges.list().filter(clg => clg.rating === rating);
+            colleges = db.colleges.list().filter(clg => clg.rating === rating);
         }
         else if (name !== undefined && location !== undefined && rating === undefined) {
-            return db.colleges.list().filter(clg => clg.name === name && clg.location === location);
+            colleges = db.colleges.list().filter(clg => clg.name === name && clg.location === location);
         }
         else if (name !== undefined && location === undefined && rating !== undefined) {
-            return db.colleges.list().filter(clg => clg.name === name && clg.rating === rating);
+            colleges = db.colleges.list().filter(clg => clg.name === name && clg.rating === rating);
         }
         else if (name === undefined && location !== undefined && rating !== undefined) {
-            return db.colleges.list().filter(clg => clg.location === location && clg.rating === rating);
+            colleges = db.colleges.list().filter(clg => clg.location === location && clg.rating === rating);
         }
         else {
             return [];
         }
+
+        return colleges.map((college) => {
+            college.books = college.bookIds.map((bookId) => {
+                return db.books.get(bookId);
+            });
+            return college;
+        });
     },
     books: () => db.books.list(),
     book: (parent, { id }) => db.books.get(id),
