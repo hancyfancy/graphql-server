@@ -14,6 +14,9 @@ const Query = {
     student: (parent, { id }) => {
         const student = db.students.get(id);
         student.college = db.colleges.get(student.collegeId);
+        student.college.books = student.college.bookIds.map((bookId) => {
+            return db.books.get(bookId);
+        });
         return student;
     },
     studentsBy: (parent, { search }) => {
