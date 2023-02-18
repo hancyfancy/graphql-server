@@ -1,4 +1,5 @@
 const db = require('./db');
+const crypto = require('crypto');
 
 const Query = {
     students: () => {
@@ -137,4 +138,15 @@ const Query = {
         }
     },
  }
- module.exports = {Query}
+
+const Mutation = {
+    addStudent: (parent, { student }) => {
+        student.id = crypto.randomBytes(256, (err, buffer) => {
+            return buffer.toString('hex');
+        });
+        db.students.create(student);
+        return student;
+    },
+}
+
+ module.exports = {Query, Mutation}

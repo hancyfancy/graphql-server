@@ -10,6 +10,10 @@ type Query  {
    booksBy(search: BookParameters): [Book]!,
 }
 
+type Mutation {
+	addStudent(student: StudentMutationParameters!): Student!,
+}
+
 type Student {
     id: ID!,
     email: String!,
@@ -22,6 +26,13 @@ input StudentParameters {
     email: String,
     firstName: String,
     lastName: String
+}
+
+input StudentMutationParameters {
+    email: String!,
+    firstName: String!,
+    lastName: String!,
+	 collegeId: ID!
 }
 
 type College {
