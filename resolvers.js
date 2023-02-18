@@ -1,5 +1,9 @@
 const db = require('./db');
-const crypto = require('crypto');
+const crypto = require('crypto-js');
+
+const studentSecretKey = "2c85a674d64f4153bc723c4b2465712d";
+const collegeSecretKey = "796fbb084ae642be8cd7a8630e27bdd2";
+const bookSecretKey = "cd19ad7a008d4fa7a8291b3bebd14fb9";
 
 const Query = {
     students: () => {
@@ -141,11 +145,16 @@ const Query = {
 
 const Mutation = {
     addStudent: (parent, { student }) => {
-        student.id = crypto.randomBytes(256, (err, buffer) => {
-            return buffer.toString('hex');
-        });
-        db.students.create(student);
-        return student;
+        const studentSerialised = JSON.stringify(student);
+        const encrypted = crypto.AES.encrypt(studentSerialised, studentSecretKey).toString();
+        if (db.students.list().some(clg => clg.id === encrypted)) {
+            return db.students.get(encrypted);
+        }
+        else {
+            student.id = encrypted;
+            db.students.create(student);
+            return student;
+        }
     },
 }
 
