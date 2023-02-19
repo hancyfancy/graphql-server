@@ -13,6 +13,7 @@ type Query  {
 type Mutation {
 	addStudent(student: StudentMutationParameters!): Student!,
     addStudents(students: [StudentMutationParameters!]!): [Student!]!,
+    updateStudent(id: ID!, student: StudentParameters!): Student,
 }
 
 type Student {
@@ -26,14 +27,15 @@ type Student {
 input StudentParameters {
     email: String,
     firstName: String,
-    lastName: String
+    lastName: String,
+    collegeId: ID,
 }
 
 input StudentMutationParameters {
     email: String!,
     firstName: String!,
     lastName: String!,
-	 collegeId: ID!
+	collegeId: ID!
 }
 
 type College {
