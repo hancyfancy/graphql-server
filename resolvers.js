@@ -143,8 +143,9 @@ const Mutation = {
     addStudent: (parent, { student }) => {
         const studentSerialised = JSON.stringify(student);
         const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
-        if (db.students.list().some(clg => clg.id === encrypted)) {
-            const existingStudent = JSON.parse(JSON.stringify(db.students.get(encrypted)));
+        const existingStudentRaw = db.students.get(encrypted);
+        if (existingStudentRaw !== undefined) {
+            const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
             existingStudent.college = db.colleges.get(existingStudent.collegeId);
             existingStudent.college.books = existingStudent.college.bookIds.map((bookId) => {
                 return db.books.get(bookId);
@@ -165,8 +166,9 @@ const Mutation = {
         return students.map((student) => {
             const studentSerialised = JSON.stringify(student);
             const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
-            if (db.students.list().some(clg => clg.id === encrypted)) {
-                const existingStudent = JSON.parse(JSON.stringify(db.students.get(encrypted)));
+            const existingStudentRaw = db.students.get(encrypted);
+            if (existingStudentRaw !== undefined) {
+                const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
                 existingStudent.college = db.colleges.get(existingStudent.collegeId);
                 existingStudent.college.books = existingStudent.college.bookIds.map((bookId) => {
                     return db.books.get(bookId);
