@@ -25,29 +25,54 @@ const Query = {
         const email = search.email;
         const firstName = search.firstName;
         const lastName = search.lastName;
+        const collegeId = search.collegeId;
 
         let students = [];
 
-        if (email !== undefined && firstName !== undefined && lastName !== undefined) {
-            students = db.students.list().filter(clg => clg.email === email && clg.firstName === firstName && clg.lastName === lastName);
+        if (email !== undefined && firstName !== undefined && lastName !== undefined && collegeId !== undefined) {
+            students = db.students.list().filter(clg => clg.email === email && clg.firstName === firstName && clg.lastName === lastName && clg.collegeId === collegeId);
         }
-        else if (email !== undefined && firstName === undefined && lastName === undefined) {
+        else if (email !== undefined && firstName === undefined && lastName === undefined && collegeId === undefined) {
             students = db.students.list().filter(clg => clg.email === email);
         }
-        else if (email === undefined && firstName !== undefined && lastName === undefined) {
+        else if (email === undefined && firstName !== undefined && lastName === undefined && collegeId === undefined) {
             students = db.students.list().filter(clg => clg.firstName === firstName);
         }
-        else if (email === undefined && firstName === undefined && lastName !== undefined) {
+        else if (email === undefined && firstName === undefined && lastName !== undefined && collegeId === undefined) {
             students = db.students.list().filter(clg => clg.lastName === lastName);
         }
-        else if (email !== undefined && firstName !== undefined && lastName === undefined) {
+        else if (email === undefined && firstName === undefined && lastName === undefined && collegeId !== undefined) {
+            students = db.students.list().filter(clg => clg.collegeId === collegeId);
+        }
+        else if (email !== undefined && firstName !== undefined && lastName === undefined && collegeId === undefined) {
             students = db.students.list().filter(clg => clg.email === email && clg.firstName === firstName);
         }
-        else if (email !== undefined && firstName === undefined && lastName !== undefined) {
+        else if (email !== undefined && firstName === undefined && lastName !== undefined && collegeId === undefined) {
             students = db.students.list().filter(clg => clg.email === email && clg.lastName === lastName);
         }
-        else if (email === undefined && firstName !== undefined && lastName !== undefined) {
+        else if (email !== undefined && firstName === undefined && lastName === undefined && collegeId !== undefined) {
+            students = db.students.list().filter(clg => clg.email === email && clg.collegeId === collegeId);
+        }
+        else if (email === undefined && firstName !== undefined && lastName !== undefined && collegeId === undefined) {
             students = db.students.list().filter(clg => clg.firstName === firstName && clg.lastName === lastName);
+        }
+        else if (email === undefined && firstName !== undefined && lastName === undefined && collegeId !== undefined) {
+            students = db.students.list().filter(clg => clg.firstName === firstName && clg.collegeId === collegeId);
+        }
+        else if (email === undefined && firstName === undefined && lastName !== undefined && collegeId !== undefined) {
+            students = db.students.list().filter(clg => clg.lastName === lastName && clg.collegeId === collegeId);
+        }
+        else if (email !== undefined && firstName !== undefined && lastName !== undefined && collegeId === undefined) {
+            students = db.students.list().filter(clg => clg.email === email && clg.firstName === firstName && clg.lastName === lastName);
+        }
+        else if (email !== undefined && firstName === undefined && lastName !== undefined && collegeId !== undefined) {
+            students = db.students.list().filter(clg => clg.email === email && clg.lastName === lastName && clg.collegeId === collegeId);
+        }
+        else if (email !== undefined && firstName !== undefined && lastName === undefined && collegeId !== undefined) {
+            students = db.students.list().filter(clg => clg.email === email && clg.firstName === firstName && clg.collegeId === collegeId);
+        }
+        else if (email === undefined && firstName !== undefined && lastName !== undefined && collegeId !== undefined) {
+            students = db.students.list().filter(clg => clg.firstName === firstName && clg.lastName === lastName && clg.collegeId === collegeId);
         }
         else {
             return [];
