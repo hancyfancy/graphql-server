@@ -166,7 +166,7 @@ const Mutation = {
             const studentSerialised = JSON.stringify(student);
             const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
             if (db.students.list().some(clg => clg.id === encrypted)) {
-                const existingStudent = db.students.get(encrypted);
+                const existingStudent = JSON.parse(JSON.stringify(db.students.get(encrypted)));
                 existingStudent.college = db.colleges.get(existingStudent.collegeId);
                 existingStudent.college.books = existingStudent.college.bookIds.map((bookId) => {
                     return db.books.get(bookId);
