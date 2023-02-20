@@ -164,6 +164,29 @@ const Query = {
     },
 }
 
+const addStudentAux = (student) => {
+    const studentSerialised = JSON.stringify(student);
+    const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
+    const existingStudentRaw = db.students.get(encrypted);
+    if (existingStudentRaw !== undefined) {
+        const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
+        existingStudent.college = db.colleges.get(existingStudent.collegeId);
+        existingStudent.college.books = existingStudent.college.bookIds.map((bookId) => {
+            return db.books.get(bookId);
+        });
+        return existingStudent;
+    }
+    else {
+        student.id = encrypted;
+        db.students.create(student);
+        student.college = db.colleges.get(student.collegeId);
+        student.college.books = student.college.bookIds.map((bookId) => {
+            return db.books.get(bookId);
+        });
+        return student;
+    }
+};
+
 const updateStudentAux = (id, student) => {
     const existingStudentRaw = db.students.get(id);
     if (existingStudentRaw !== undefined) {
@@ -198,49 +221,11 @@ const updateStudentAux = (id, student) => {
 
 const Mutation = {
     addStudent: (parent, { student }) => {
-        const studentSerialised = JSON.stringify(student);
-        const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
-        const existingStudentRaw = db.students.get(encrypted);
-        if (existingStudentRaw !== undefined) {
-            const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
-            existingStudent.college = db.colleges.get(existingStudent.collegeId);
-            existingStudent.college.books = existingStudent.college.bookIds.map((bookId) => {
-                return db.books.get(bookId);
-            });
-            return existingStudent;
-        }
-        else {
-            student.id = encrypted;
-            db.students.create(student);
-            student.college = db.colleges.get(student.collegeId);
-            student.college.books = student.college.bookIds.map((bookId) => {
-                return db.books.get(bookId);
-            });
-            return student;
-        }
+        return addStudentAux(student);
     },
     addStudents: (parent, { students }) => {
         return students.map((student) => {
-            const studentSerialised = JSON.stringify(student);
-            const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
-            const existingStudentRaw = db.students.get(encrypted);
-            if (existingStudentRaw !== undefined) {
-                const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
-                existingStudent.college = db.colleges.get(existingStudent.collegeId);
-                existingStudent.college.books = existingStudent.college.bookIds.map((bookId) => {
-                    return db.books.get(bookId);
-                });
-                return existingStudent;
-            }
-            else {
-                student.id = encrypted;
-                db.students.create(student);
-                student.college = db.colleges.get(student.collegeId);
-                student.college.books = student.college.bookIds.map((bookId) => {
-                    return db.books.get(bookId);
-                });
-                return student;
-            }
+            return addStudentAux(student);
         });
     },
     updateStudent: (parent, { id, student }) => {
