@@ -1,24 +1,24 @@
 const db = require('./db');
 const crypto = require('crypto-js');
 
+const populateStudentAux = (student) => {
+    student.college = db.colleges.get(student.collegeId);
+    student.college.books = student.college.bookIds.map((bookId) => {
+        return db.books.get(bookId);
+    });
+    return student;
+};
+
 const Query = {
     students: () => {
         const students = db.students.list();
         return students.map((student) => {
-            student.college = db.colleges.get(student.collegeId);
-            student.college.books = student.college.bookIds.map((bookId) => {
-                return db.books.get(bookId);
-            });
-            return student;
+            return populateStudentAux(student);
         });
     },
     student: (parent, { id }) => {
         const student = db.students.get(id);
-        student.college = db.colleges.get(student.collegeId);
-        student.college.books = student.college.bookIds.map((bookId) => {
-            return db.books.get(bookId);
-        });
-        return student;
+        return populateStudentAux(student);
     },
     studentsBy: (parent, { search }) => {
 
@@ -79,11 +79,7 @@ const Query = {
         }
 
         return students.map((student) => {
-            student.college = db.colleges.get(student.collegeId);
-            student.college.books = student.college.bookIds.map((bookId) => {
-                return db.books.get(bookId);
-            });
-            return student;
+            return populateStudentAux(student);
         });
     },
     colleges: () => {
