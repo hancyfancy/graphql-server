@@ -69,4 +69,5 @@ type Book {
 input BookParameters {
     name: String,
     author: String
+    collegeIds: [String]
 }

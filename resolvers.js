@@ -168,19 +168,38 @@ const Query = {
 
         const name = search.name;
         const author = search.author;
+        const collegeIds = search.collegeIds;
 
-        if (name !== undefined && author !== undefined) {
-            return db.books.list().filter(clg => clg.name === name && clg.author === author);
+        let books = [];
+
+        if (name !== undefined && author !== undefined && collegeIds !== undefined) {
+            books = db.books.list().filter(clg => clg.name === name && clg.author === author && JSON.stringify(clg.collegeIds) === JSON.stringify(collegeIds));
         }
-        else if (name !== undefined && author === undefined) {
-            return db.books.list().filter(clg => clg.name === name);
+        else if (name !== undefined && author === undefined && collegeIds === undefined) {
+            books = db.books.list().filter(clg => clg.name === name);
         }
-        else if (name === undefined && author !== undefined) {
-            return db.books.list().filter(clg => clg.author === author);
+        else if (name === undefined && author !== undefined && collegeIds === undefined) {
+            books = db.books.list().filter(clg => clg.author === author);
+        }
+        else if (name === undefined && author === undefined && collegeIds !== undefined) {
+            books = db.books.list().filter(clg => JSON.stringify(clg.collegeIds) === JSON.stringify(collegeIds));
+        }
+        else if (name !== undefined && author !== undefined && collegeIds === undefined) {
+            books = db.books.list().filter(clg => clg.name === name && clg.author === author);
+        }
+        else if (name !== undefined && author === undefined && collegeIds !== undefined) {
+            books = db.books.list().filter(clg => clg.name === name && JSON.stringify(clg.collegeIds) === JSON.stringify(collegeIds));
+        }
+        else if (name === undefined && author !== undefined && collegeIds !== undefined) {
+            books = db.books.list().filter(clg => clg.author === author && JSON.stringify(clg.collegeIds) === JSON.stringify(collegeIds));
         }
         else {
             return [];
         }
+
+        return books.map((book) => {
+            return populateBookAux(book);
+        });
     },
 }
 
