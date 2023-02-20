@@ -240,7 +240,7 @@ const Mutation = {
             return student;
         }
 
-        return {};
+        return;
     },
 }
 
