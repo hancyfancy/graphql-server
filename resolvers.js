@@ -166,20 +166,12 @@ const addStudentAux = (student) => {
     const existingStudentRaw = db.students.get(encrypted);
     if (existingStudentRaw !== undefined) {
         const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
-        existingStudent.college = db.colleges.get(existingStudent.collegeId);
-        existingStudent.college.books = existingStudent.college.bookIds.map((bookId) => {
-            return db.books.get(bookId);
-        });
-        return existingStudent;
+        return populateStudentAux(existingStudent);
     }
     else {
         student.id = encrypted;
         db.students.create(student);
-        student.college = db.colleges.get(student.collegeId);
-        student.college.books = student.college.bookIds.map((bookId) => {
-            return db.books.get(bookId);
-        });
-        return student;
+        return populateStudentAux(student);
     }
 };
 
