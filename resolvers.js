@@ -25,6 +25,16 @@ const populateBookAux = (book) => {
     return book;
 };
 
+const populateCollegeAux = (college) => {
+    college.books = college.bookIds.map((bookId) => {
+        return db.books.get(bookId);
+    });
+    college.students = college.studentIds.map((studentId) => {
+        return db.students.get(studentId);
+    });
+    return college;
+};
+
 const Query = {
     students: () => {
         const students = db.students.list();
@@ -101,18 +111,12 @@ const Query = {
     colleges: () => {
         const colleges = db.colleges.list();
         return colleges.map((college) => {
-            college.books = college.bookIds.map((bookId) => {
-                return db.books.get(bookId);
-            });
-            return college;
+            return populateCollegeAux(college);
         });
     },
     college: (parent, { id }) => {
         const college = db.colleges.get(id);
-        college.books = college.bookIds.map((bookId) => {
-            return db.books.get(bookId);
-        });
-        return college;
+        return populateCollegeAux(college);
     },
     collegesBy: (parent, { search }) => {
 
@@ -148,10 +152,7 @@ const Query = {
         }
 
         return colleges.map((college) => {
-            college.books = college.bookIds.map((bookId) => {
-                return db.books.get(bookId);
-            });
-            return college;
+            return populateCollegeAux(college);
         });
     },
     books: () => {
