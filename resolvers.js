@@ -9,14 +9,6 @@ const populateStudentAux = (student) => {
     return student;
 };
 
-const populateFilteredStudentsAux = (students, filteredStudents) => {
-    filteredStudents.map((filteredStudent) => {
-        if (!students.map((student) => student.id).includes(filteredStudent.id)) {
-            students.push(filteredStudent);
-        }
-    });
-};
-
 const populateBookAux = (book) => {
     book.colleges = book.collegeIds.map((collegeId) => {
         return db.colleges.get(collegeId);
@@ -33,14 +25,6 @@ const populateBookAux = (book) => {
     return book;
 };
 
-const populateFilteredBooksAux = (books, filteredBooks) => {
-    filteredBooks.map((filteredBook) => {
-        if (!books.map((book) => book.id).includes(filteredBook.id)) {
-            books.push(filteredBook);
-        }
-    });
-};
-
 const populateCollegeAux = (college) => {
     college.books = college.bookIds.map((bookId) => {
         return db.books.get(bookId);
@@ -49,6 +33,14 @@ const populateCollegeAux = (college) => {
         return db.students.get(studentId);
     });
     return college;
+};
+
+const populateFilteredObjectsAux = (objs, filteredObjs) => {
+    filteredObjs.map((filteredObj) => {
+        if (!objs.map((obj) => obj.id).includes(filteredObj.id)) {
+            objs.push(filteredObj);
+        }
+    });
 };
 
 const Query = {
@@ -73,22 +65,22 @@ const Query = {
 
         if (email != undefined) {
             const filteredStudents = db.students.list().filter(clg => clg.email === email);
-            populateFilteredStudentsAux(students, filteredStudents);
+            populateFilteredObjectsAux(students, filteredStudents);
         }
 
         if (firstName != undefined) {
             const filteredStudents = db.students.list().filter(clg => clg.firstName === firstName);
-            populateFilteredStudentsAux(students, filteredStudents);
+            populateFilteredObjectsAux(students, filteredStudents);
         }
 
         if (lastName != undefined) {
             const filteredStudents = db.students.list().filter(clg => clg.lastName === lastName);
-            populateFilteredStudentsAux(students, filteredStudents);
+            populateFilteredObjectsAux(students, filteredStudents);
         }
 
         if (collegeId != undefined) {
             const filteredStudents = db.students.list().filter(clg => clg.collegeId === collegeId);
-            populateFilteredStudentsAux(students, filteredStudents);
+            populateFilteredObjectsAux(students, filteredStudents);
         }
 
         return students.map((student) => {
@@ -162,18 +154,18 @@ const Query = {
 
         if (name !== undefined) {
             const filteredBooks = db.books.list().filter(clg => clg.name === name);
-            populateFilteredBooksAux(books, filteredBooks);
+            populateFilteredObjectsAux(books, filteredBooks);
         }
 
         if (author !== undefined) {
             const filteredBooks = db.books.list().filter(clg => clg.author === author);
-            populateFilteredBooksAux(books, filteredBooks);
+            populateFilteredObjectsAux(books, filteredBooks);
 
         }
 
         if (collegeIds !== undefined) {
             const filteredBooks = db.books.list().filter(clg => JSON.stringify(clg.collegeIds) === JSON.stringify(collegeIds));
-            populateFilteredBooksAux(books, filteredBooks);
+            populateFilteredObjectsAux(books, filteredBooks);
         }
 
         return books.map((book) => {
