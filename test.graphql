@@ -1,0 +1,221 @@
+#Student mutations
+
+mutation {
+  updateStudent(id: "S1002", student: {firstName: "Yana"}) {
+    id
+    college {
+      name
+      location
+      books {
+        name
+        author
+      }
+    }
+  }
+}
+
+mutation {
+  updateStudents(students: [
+    {id: "S1002", student: {firstName: "Yana"}}, 
+    {id: "S1001", student: {lastName: "Aboud"}}
+  ]) {
+    id
+    college {
+      name
+      location
+      books {
+        name
+        author
+      }
+    }
+  }
+}
+
+mutation {
+  addStudent(student: {email: "tom.bom@gmail.com", firstName: "Tom", lastName: "Bom", collegeId: "col-102"}) {
+    id
+    college {
+      name
+      location
+      books {
+        name
+        author
+      }
+    }
+  }
+}
+
+mutation {
+  addStudents(students: [
+    {email: "tom.bom@gmail.com", firstName: "Tom", lastName: "Bom", collegeId: "col-102"},
+    {email: "ming.hua@gmail.com", firstName: "Ming", lastName: "Hua", collegeId: "col-101"}
+  ]) {
+    id
+    college {
+      name
+      location
+      books {
+        name
+        author
+      }
+    }
+  }
+}
+
+#Student queries
+
+{
+  students {
+    id
+    lastName
+    firstName
+    college {
+      name
+      location
+      books {
+        name
+        author
+      }
+    }
+  }
+}
+
+{
+  student(id: "S1002") {
+    id
+    lastName
+    firstName
+    college {
+      name
+      location
+      books {
+        name
+        author
+      }
+    }
+  }
+}
+
+{
+  studentsBy(search: {email: "kiran.panigrahi@tutorialpoint.org", firstName: "Kiran", lastName: "Panigrahi", collegeId:"col-101"}) {
+    id
+    lastName
+    firstName
+    college {
+      name
+      location
+      books {
+        name
+        author
+      }
+    }
+  }
+}
+
+#Book queries
+
+{
+  books {
+    name
+    author
+    colleges {
+      name
+      location
+      students
+      {
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+}
+
+{
+  book(id: "bok-102") {
+    name
+    author
+    colleges {
+      name
+      location
+      students
+      {
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+}
+
+{
+  booksBy(search: {name: "On the wild side", author: "Harriett Osbyorne", collegeIds:["col-101", "col-102"]}) {
+    name
+    author
+    colleges {
+      name
+      location
+      students {
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+}
+
+#College queries
+
+{
+  colleges {
+  	name
+    location
+    books {
+      name
+      author
+    }
+    students {
+      lastName
+      firstName
+      email
+    }
+  }
+}
+
+{
+  college(id: "col-101") {
+    name
+    location
+    books {
+      name
+      author
+    }
+    students {
+      lastName
+      firstName
+      email
+    }
+  }
+}
+
+{
+  collegesBy(search: {
+    name: "AMU",
+    location: "Uttar Pradesh",
+    rating: 5.0,
+    bookIds: ["bok-103", "bok-105"],
+    studentIds: ["S1002", "S1003"]
+  }) {
+  	name
+    location
+    books {
+      name
+      author
+    }
+    students {
+      lastName
+      firstName
+      email
+    }
+  }
+}
