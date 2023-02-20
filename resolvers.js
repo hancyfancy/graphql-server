@@ -201,7 +201,7 @@ const updateStudentAux = (id, student) => {
         }
 
         db.students.create(student);
-        return student;
+        return populateStudentAux(student);
     }
 
     return;
