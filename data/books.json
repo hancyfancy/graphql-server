@@ -2,36 +2,42 @@
     {
        "id": "bok-101",
        "name": "Whisper in the wind",
-       "author": "LL B Gen"
+       "author": "LL B Gen",
+       "collegeIds": []
     },
     
     {
         "id": "bok-102",
         "name": "Knight and Bay",
-        "author": "Zon Drekka"
+        "author": "Zon Drekka",
+        "collegeIds": ["col-102"]
     },
     
     {
         "id": "bok-103",
         "name": "The Last Flair Bender",
-        "author": "Manny Abuduo"
+        "author": "Manny Abuduo",
+        "collegeIds": ["col-101"]
     },
     
     {
         "id": "bok-104",
         "name": "Now You See Me",
-        "author": "Lee Chen"
+        "author": "Lee Chen",
+        "collegeIds": []
     },
     
     {
         "id": "bok-105",
         "name": "On the wild side",
-        "author": "Harriett Osbyorne"
+        "author": "Harriett Osbyorne",
+        "collegeIds": ["col-101", "col-102"]
     },
     
     {
         "id": "bok-106",
         "name": "Empty Space",
-        "author": "Xelvudi Trilchanov"
+        "author": "Xelvudi Trilchanov",
+        "collegeIds": ["col-102"]
     }
  ]
