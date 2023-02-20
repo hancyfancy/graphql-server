@@ -249,7 +249,7 @@ const Mutation = {
     updateStudents: (parent, { students }) => {
         return students.map(({id, student}) => {
             return updateStudentAux(id, student);
-        });
+        }).filter(s => s !== undefined);
     },
 }
 
