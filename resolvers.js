@@ -102,32 +102,34 @@ const Query = {
         const name = search.name;
         const location = search.location;
         const rating = search.rating;
+        const bookIds = search.bookIds;
+        const studentIds = search.studentIds;
 
         let colleges = [];
 
-        if (name !== undefined && location !== undefined && rating !== undefined) {
-            colleges = db.colleges.list().filter(clg => clg.name === name && clg.location === location && clg.rating === rating);
+        if (name !== undefined) {
+            const filteredColleges = db.colleges.list().filter(clg => clg.name === name);
+            populateFilteredObjectsAux(colleges, filteredColleges);
         }
-        else if (name !== undefined && location === undefined && rating === undefined) {
-            colleges = db.colleges.list().filter(clg => clg.name === name);
+
+        if (location !== undefined) {
+            const filteredColleges = db.colleges.list().filter(clg => clg.location === location);
+            populateFilteredObjectsAux(colleges, filteredColleges);
         }
-        else if (name === undefined && location !== undefined && rating === undefined) {
-            colleges = db.colleges.list().filter(clg => clg.location === location);
+
+        if (rating !== undefined) {
+            const filteredColleges = db.colleges.list().filter(clg => clg.rating === rating);
+            populateFilteredObjectsAux(colleges, filteredColleges);
         }
-        else if (name === undefined && location === undefined && rating !== undefined) {
-            colleges = db.colleges.list().filter(clg => clg.rating === rating);
+
+        if (bookIds !== undefined) {
+            const filteredColleges = db.colleges.list().filter(clg => JSON.stringify(clg.bookIds) === JSON.stringify(bookIds));
+            populateFilteredObjectsAux(colleges, filteredColleges);
         }
-        else if (name !== undefined && location !== undefined && rating === undefined) {
-            colleges = db.colleges.list().filter(clg => clg.name === name && clg.location === location);
-        }
-        else if (name !== undefined && location === undefined && rating !== undefined) {
-            colleges = db.colleges.list().filter(clg => clg.name === name && clg.rating === rating);
-        }
-        else if (name === undefined && location !== undefined && rating !== undefined) {
-            colleges = db.colleges.list().filter(clg => clg.location === location && clg.rating === rating);
-        }
-        else {
-            return [];
+
+        if (studentIds !== undefined) {
+            const filteredColleges = db.colleges.list().filter(clg => JSON.stringify(clg.studentIds) === JSON.stringify(studentIds));
+            populateFilteredObjectsAux(colleges, filteredColleges);
         }
 
         return colleges.map((college) => {

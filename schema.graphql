@@ -56,7 +56,9 @@ type College {
 input CollegeParameters {
     name: String,
     location: String,
-    rating: Float
+    rating: Float,
+    bookIds: [String],
+    studentIds: [String]
 }
 
 type Book {
