@@ -162,7 +162,39 @@ const Query = {
             return [];
         }
     },
- }
+}
+
+const updateStudentAux = (id, student) => {
+    const existingStudentRaw = db.students.get(id);
+    if (existingStudentRaw !== undefined) {
+        const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
+        db.students.delete(id);
+        const studentSerialised = JSON.stringify(student);
+        const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
+        student.id = encrypted;
+
+        if (student.email === undefined) {
+            student.email = existingStudent.email;
+        }
+
+        if (student.lastName === undefined) {
+            student.lastName = existingStudent.lastName;
+        }
+
+        if (student.firstName === undefined) {
+            student.firstName = existingStudent.firstName;
+        }
+
+        if (student.collegeId === undefined) {
+            student.collegeId = existingStudent.collegeId;
+        }
+
+        db.students.create(student);
+        return student;
+    }
+
+    return;
+};
 
 const Mutation = {
     addStudent: (parent, { student }) => {
@@ -212,35 +244,12 @@ const Mutation = {
         });
     },
     updateStudent: (parent, { id, student }) => {
-        const existingStudentRaw = db.students.get(id);
-        if (existingStudentRaw !== undefined) {
-            const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
-            db.students.delete(id);
-            const studentSerialised = JSON.stringify(student);
-            const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
-            student.id = encrypted;
-
-            if (student.email === undefined) {
-                student.email = existingStudent.email;
-            }
-
-            if (student.lastName === undefined) {
-                student.lastName = existingStudent.lastName;
-            }
-
-            if (student.firstName === undefined) {
-                student.firstName = existingStudent.firstName;
-            }
-
-            if (student.collegeId === undefined) {
-                student.collegeId = existingStudent.collegeId;
-            }
-
-            db.students.create(student);
-            return student;
-        }
-
-        return;
+        return updateStudentAux(id, student);
+    },
+    updateStudents: (parent, { students }) => {
+        return students.map(({id, student}) => {
+            return updateStudentAux(id, student);
+        });
     },
 }
 
