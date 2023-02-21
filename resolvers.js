@@ -177,11 +177,16 @@ const Query = {
 }
 
 const addStudentAux = (student) => {
-    const serialised = JSON.stringify(student);
+    const copy = JSON.parse(JSON.stringify(student));
+    copy.collegeId = undefined;
+    const serialised = JSON.stringify(copy);
     const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
     const existingRaw = db.students.get(encrypted);
     if (existingRaw !== undefined) {
         const existing = JSON.parse(JSON.stringify(existingRaw));
+        db.students.delete(existing.id);
+        existing.collegeId = student.collegeId;
+        db.students.create(existing);
         return populateStudentAux(existing);
     }
     else {
