@@ -253,9 +253,6 @@ const updateBookAux = (id, book) => {
     if (existingRaw !== undefined) {
         const existing = JSON.parse(JSON.stringify(existingRaw));
         db.books.delete(id);
-        const serialised = JSON.stringify(book);
-        const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
-        book.id = encrypted;
 
         if (book.name === undefined) {
             book.name = existing.name;
@@ -268,6 +265,12 @@ const updateBookAux = (id, book) => {
         if (book.collegeIds === undefined) {
             book.collegeIds = existing.collegeIds;
         }
+
+        const copy = JSON.parse(JSON.stringify(book));
+        copy.collegeIds = undefined;
+        const serialised = JSON.stringify(copy);
+        const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
+        book.id = encrypted;
 
         db.books.create(book);
         return populateBookAux(book);
