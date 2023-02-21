@@ -15,6 +15,10 @@ type Mutation {
     addStudents(students: [StudentMutationParameters!]!): [Student!]!,
     updateStudent(id: ID!, student: StudentParameters!): Student,
     updateStudents(students: [StudentMultipleMutationParameters!]!): [Student]!,
+    addBook(book: BookMutationParameters!): Book!,
+    addBooks(books: [BookMutationParameters!]!): [Book!]!,
+    updateBook(id: ID!, book: BookParameters!): Book,
+    updateBooks(students: [BookMultipleMutationParameters!]!): [Book]!,
 }
 
 type Student {
@@ -70,6 +74,17 @@ type Book {
 
 input BookParameters {
     name: String,
-    author: String
+    author: String,
     collegeIds: [String]
+}
+
+input BookMutationParameters {
+    name: String!,
+    author: String!,
+    collegeIds: [String!]!
+}
+
+input BookMultipleMutationParameters {
+    id: ID!,
+    book: BookParameters!
 }

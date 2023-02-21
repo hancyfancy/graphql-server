@@ -177,12 +177,12 @@ const Query = {
 }
 
 const addStudentAux = (student) => {
-    const studentSerialised = JSON.stringify(student);
-    const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
-    const existingStudentRaw = db.students.get(encrypted);
-    if (existingStudentRaw !== undefined) {
-        const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
-        return populateStudentAux(existingStudent);
+    const serialised = JSON.stringify(student);
+    const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
+    const existingRaw = db.students.get(encrypted);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
+        return populateStudentAux(existing);
     }
     else {
         student.id = encrypted;
@@ -192,12 +192,12 @@ const addStudentAux = (student) => {
 };
 
 const updateStudentAux = (id, student) => {
-    const existingStudentRaw = db.students.get(id);
-    if (existingStudentRaw !== undefined) {
-        const existingStudent = JSON.parse(JSON.stringify(existingStudentRaw));
+    const existingRaw = db.students.get(id);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
         db.students.delete(id);
-        const studentSerialised = JSON.stringify(student);
-        const encrypted = crypto.MD5(studentSerialised).toString(crypto.enc.Hex);
+        const serialised = JSON.stringify(student);
+        const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
         student.id = encrypted;
 
         if (student.email === undefined) {
@@ -223,6 +223,49 @@ const updateStudentAux = (id, student) => {
     return;
 };
 
+const addBookAux = (book) => {
+    const serialised = JSON.stringify(book);
+    const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
+    const existingRaw = db.books.get(encrypted);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
+        return populateBookAux(existing);
+    }
+    else {
+        book.id = encrypted;
+        db.books.create(book);
+        return populateBookAux(book);
+    }
+};
+
+const updateBookAux = (id, book) => {
+    const existingRaw = db.books.get(id);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
+        db.books.delete(id);
+        const serialised = JSON.stringify(book);
+        const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
+        book.id = encrypted;
+
+        if (book.name === undefined) {
+            book.name = existing.name;
+        }
+
+        if (book.author === undefined) {
+            book.author = existing.author;
+        }
+
+        if (book.collegeIds === undefined) {
+            book.collegeIds = existing.collegeIds;
+        }
+
+        db.books.create(book);
+        return populateBookAux(book);
+    }
+
+    return;
+};
+
 const Mutation = {
     addStudent: (parent, { student }) => {
         return addStudentAux(student);
@@ -238,6 +281,22 @@ const Mutation = {
     updateStudents: (parent, { students }) => {
         return students.map(({id, student}) => {
             return updateStudentAux(id, student);
+        }).filter(s => s !== undefined);
+    },
+    addBook: (parent, { book }) => {
+        return addBookAux(book);
+    },
+    addBooks: (parent, { books }) => {
+        return books.map((book) => {
+            return addBookAux(book);
+        });
+    },
+    updateBook: (parent, { id, book }) => {
+        return updateBookAux(id, book);
+    },
+    updateBooks: (parent, { books }) => {
+        return books.map(({id, book}) => {
+            return updateBookAux(id, book);
         }).filter(s => s !== undefined);
     },
 }
