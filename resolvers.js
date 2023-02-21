@@ -282,6 +282,68 @@ const updateBookAux = (id, book) => {
     return;
 };
 
+const addCollegeAux = (college) => {
+    const copy = JSON.parse(JSON.stringify(college));
+    copy.bookIds = undefined;
+    copy.studentIds = undefined;
+    const serialised = JSON.stringify(copy);
+    const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
+    const existingRaw = db.colleges.get(encrypted);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
+        db.colleges.delete(existing.id);
+        existing.bookIds = college.bookIds;
+        existing.studentIds = college.studentIds;
+        db.colleges.create(existing);
+        return populateCollegeAux(existing);
+    }
+    else {
+        college.id = encrypted;
+        db.colleges.create(college);
+        return populateCollegeAux(college);
+    }
+};
+
+const updateCollegeAux = (id, college) => {
+    const existingRaw = db.colleges.get(id);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
+        db.colleges.delete(id);
+
+        if (college.name === undefined) {
+            college.name = existing.name;
+        }
+
+        if (college.location === undefined) {
+            college.location = existing.location;
+        }
+
+        if (college.rating === undefined) {
+            college.rating = existing.rating;
+        }
+
+        if (college.bookIds === undefined) {
+            college.bookIds = existing.bookIds;
+        }
+
+        if (college.studentIds === undefined) {
+            college.studentIds = existing.studentIds;
+        }
+
+        const copy = JSON.parse(JSON.stringify(college));
+        copy.bookIds = undefined;
+        copy.studentIds = undefined;
+        const serialised = JSON.stringify(copy);
+        const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
+        college.id = encrypted;
+
+        db.colleges.create(college);
+        return populateCollegeAux(college);
+    }
+
+    return;
+};
+
 const Mutation = {
     addStudent: (parent, { student }) => {
         return addStudentAux(student);
@@ -313,6 +375,22 @@ const Mutation = {
     updateBooks: (parent, { books }) => {
         return books.map(({id, book}) => {
             return updateBookAux(id, book);
+        }).filter(s => s !== undefined);
+    },
+    addCollege: (parent, { college }) => {
+        return addCollegeAux(college);
+    },
+    addColleges: (parent, { colleges }) => {
+        return colleges.map((college) => {
+            return addCollegeAux(college);
+        });
+    },
+    updateCollege: (parent, { id, college }) => {
+        return updateCollegeAux(id, college);
+    },
+    updateColleges: (parent, { colleges }) => {
+        return colleges.map(({id, college}) => {
+            return updateCollegeAux(id, college);
         }).filter(s => s !== undefined);
     },
 }
