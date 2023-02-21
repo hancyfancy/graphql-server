@@ -224,7 +224,9 @@ const updateStudentAux = (id, student) => {
 };
 
 const addBookAux = (book) => {
-    const serialised = JSON.stringify(book);
+    const copy = JSON.parse(JSON.stringify(book));
+    copy.collegeIds = undefined;
+    const serialised = JSON.stringify(copy);
     const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
     const existingRaw = db.books.get(encrypted);
     if (existingRaw !== undefined) {
