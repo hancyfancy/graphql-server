@@ -201,25 +201,28 @@ const updateStudentAux = (id, student) => {
     if (existingRaw !== undefined) {
         const existing = JSON.parse(JSON.stringify(existingRaw));
         db.students.delete(id);
-        const serialised = JSON.stringify(student);
-        const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
-        student.id = encrypted;
 
         if (student.email === undefined) {
-            student.email = existingStudent.email;
+            student.email = existing.email;
         }
 
         if (student.lastName === undefined) {
-            student.lastName = existingStudent.lastName;
+            student.lastName = existing.lastName;
         }
 
         if (student.firstName === undefined) {
-            student.firstName = existingStudent.firstName;
+            student.firstName = existing.firstName;
         }
 
         if (student.collegeId === undefined) {
-            student.collegeId = existingStudent.collegeId;
+            student.collegeId = existing.collegeId;
         }
+
+        const copy = JSON.parse(JSON.stringify(student));
+        copy.collegeId = undefined;
+        const serialised = JSON.stringify(copy);
+        const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
+        student.id = encrypted;
 
         db.students.create(student);
         return populateStudentAux(student);
