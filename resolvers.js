@@ -231,6 +231,9 @@ const addBookAux = (book) => {
     const existingRaw = db.books.get(encrypted);
     if (existingRaw !== undefined) {
         const existing = JSON.parse(JSON.stringify(existingRaw));
+        db.books.delete(existing.id);
+        existing.collegeIds = book.collegeIds;
+        db.books.create(existing);
         return populateBookAux(existing);
     }
     else {
