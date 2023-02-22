@@ -274,16 +274,20 @@ const addBookAux = (book) => {
 };
 
 const updateBookAux = (id, book) => {
+    book.name = book.name?.trim();
+    book.author = book.author?.trim();
+    book.collegeIds = book.collegeIds?.filter(s => s.trim() !== "");
+
     const existingRaw = db.books.get(id);
     if (existingRaw !== undefined) {
         const existing = JSON.parse(JSON.stringify(existingRaw));
         db.books.delete(id);
 
-        if (book.name === undefined) {
+        if (book.name === undefined || book.name === "") {
             book.name = existing.name;
         }
 
-        if (book.author === undefined) {
+        if (book.author === undefined || book.author === "") {
             book.author = existing.author;
         }
 
@@ -336,20 +340,25 @@ const addCollegeAux = (college) => {
 };
 
 const updateCollegeAux = (id, college) => {
+    college.name = college.name?.trim();
+    college.location = college.location?.trim();
+    college.bookIds = college.bookIds?.filter(s => s.trim() !== "");
+    college.studentIds = college.studentIds?.filter(s => s.trim() !== "");
+
     const existingRaw = db.colleges.get(id);
     if (existingRaw !== undefined) {
         const existing = JSON.parse(JSON.stringify(existingRaw));
         db.colleges.delete(id);
 
-        if (college.name === undefined) {
+        if (college.name === undefined || college.name === "") {
             college.name = existing.name;
         }
 
-        if (college.location === undefined) {
+        if (college.location === undefined || college.location === "") {
             college.location = existing.location;
         }
 
-        if (college.rating === undefined) {
+        if (college.rating === undefined || college.rating < 0) {
             college.rating = existing.rating;
         }
 
