@@ -11,8 +11,8 @@ type Query  {
 }
 
 type Mutation {
-	addStudent(student: StudentMutationParameters!): Student!,
-    addStudents(students: [StudentMutationParameters!]!): [Student!]!,
+	addStudent(student: StudentMutationParameters!): Student,
+    addStudents(students: [StudentMutationParameters!]!): [Student]!,
     updateStudent(id: ID!, student: StudentParameters!): Student,
     updateStudents(students: [StudentMultipleMutationParameters!]!): [Student]!,
     addBook(book: BookMutationParameters!): Book!,

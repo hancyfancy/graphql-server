@@ -177,6 +177,10 @@ const Query = {
 }
 
 const addStudentAux = (student) => {
+    if (student.email === "" || student.firstName === "" || student.lastName === "" || student.collegeId === "") {
+        return;
+    }
+
     const copy = JSON.parse(JSON.stringify(student));
     copy.collegeId = undefined;
     const serialised = JSON.stringify(copy);
@@ -351,7 +355,7 @@ const Mutation = {
     addStudents: (parent, { students }) => {
         return students.map((student) => {
             return addStudentAux(student);
-        });
+        }).filter(s => s !== undefined);
     },
     updateStudent: (parent, { id, student }) => {
         return updateStudentAux(id, student);
