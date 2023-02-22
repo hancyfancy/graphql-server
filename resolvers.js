@@ -206,10 +206,10 @@ const addStudentAux = (student) => {
 };
 
 const updateStudentAux = (id, student) => {
-    student.email = student.email.trim();
-    student.firstName = student.firstName.trim();
-    student.lastName = student.lastName.trim();
-    student.collegeId = student.collegeId.trim();
+    student.email = student.email?.trim();
+    student.firstName = student.firstName?.trim();
+    student.lastName = student.lastName?.trim();
+    student.collegeId = student.collegeId?.trim();
 
     const existingRaw = db.students.get(id);
     if (existingRaw !== undefined) {
