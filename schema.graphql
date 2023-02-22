@@ -19,8 +19,8 @@ type Mutation {
     addBooks(books: [BookMutationParameters!]!): [Book]!,
     updateBook(id: ID!, book: BookParameters!): Book,
     updateBooks(books: [BookMultipleMutationParameters!]!): [Book]!,
-    addCollege(college: CollegeMutationParameters!): College!,
-    addColleges(colleges: [CollegeMutationParameters!]!): [College!]!,
+    addCollege(college: CollegeMutationParameters!): College,
+    addColleges(colleges: [CollegeMutationParameters!]!): [College]!,
     updateCollege(id: ID!, college: CollegeParameters!): College,
     updateColleges(colleges: [CollegeMultipleMutationParameters!]!): [College]!,
 }
