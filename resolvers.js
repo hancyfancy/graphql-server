@@ -177,6 +177,11 @@ const Query = {
 }
 
 const addStudentAux = (student) => {
+    student.email = student.email.trim();
+    student.firstName = student.firstName.trim();
+    student.lastName = student.lastName.trim();
+    student.collegeId = student.collegeId.trim();
+
     if (student.email === "" || student.firstName === "" || student.lastName === "" || student.collegeId === "") {
         return;
     }
@@ -236,7 +241,9 @@ const updateStudentAux = (id, student) => {
 };
 
 const addBookAux = (book) => {
-    book.collegeIds = book.collegeIds.filter(s => s !== "");
+    book.name = book.name.trim();
+    book.author = book.author.trim();
+    book.collegeIds = book.collegeIds.filter(s => s.trim() !== "");
 
     if (book.name === "" || book.author === "") {
         return;
@@ -293,8 +300,10 @@ const updateBookAux = (id, book) => {
 };
 
 const addCollegeAux = (college) => {
-    college.bookIds = college.bookIds.filter(s => s !== "");
-    college.studentIds = college.studentIds.filter(s => s !== "");
+    college.name = college.name.trim();
+    college.location = college.location.trim();
+    college.bookIds = college.bookIds.filter(s => s.trim() !== "");
+    college.studentIds = college.studentIds.filter(s => s.trim() !== "");
 
     if (college.name === "" || college.location === "" || college.rating < 0) {
         return;
