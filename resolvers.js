@@ -206,24 +206,29 @@ const addStudentAux = (student) => {
 };
 
 const updateStudentAux = (id, student) => {
+    student.email = student.email.trim();
+    student.firstName = student.firstName.trim();
+    student.lastName = student.lastName.trim();
+    student.collegeId = student.collegeId.trim();
+
     const existingRaw = db.students.get(id);
     if (existingRaw !== undefined) {
         const existing = JSON.parse(JSON.stringify(existingRaw));
         db.students.delete(id);
 
-        if (student.email === undefined) {
+        if (student.email === undefined || student.email === "") {
             student.email = existing.email;
         }
 
-        if (student.lastName === undefined) {
+        if (student.lastName === undefined || student.lastName === "") {
             student.lastName = existing.lastName;
         }
 
-        if (student.firstName === undefined) {
+        if (student.firstName === undefined || student.firstName === "") {
             student.firstName = existing.firstName;
         }
 
-        if (student.collegeId === undefined) {
+        if (student.collegeId === undefined || student.collegeId === "") {
             student.collegeId = existing.collegeId;
         }
 
