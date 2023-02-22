@@ -181,8 +181,9 @@ const addStudentAux = (student) => {
     copy.collegeId = undefined;
     const serialised = JSON.stringify(copy);
     const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
-    const existing = JSON.parse(JSON.stringify(db.students.get(encrypted)));
-    if (existing !== undefined) {
+    const existingRaw = db.students.get(encrypted);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
         db.students.delete(existing.id);
         existing.collegeId = student.collegeId;
         db.students.create(existing);
@@ -196,8 +197,9 @@ const addStudentAux = (student) => {
 };
 
 const updateStudentAux = (id, student) => {
-    const existing = JSON.parse(JSON.stringify(db.students.get(id)));
-    if (existing !== undefined) {
+    const existingRaw = db.students.get(id);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
         db.students.delete(id);
 
         if (student.email === undefined) {
@@ -234,8 +236,9 @@ const addBookAux = (book) => {
     copy.collegeIds = undefined;
     const serialised = JSON.stringify(copy);
     const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
-    const existing = JSON.parse(JSON.stringify(db.books.get(encrypted)));
-    if (existing !== undefined) {
+    const existingRaw = db.books.get(encrypted);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
         db.books.delete(existing.id);
         existing.collegeIds = book.collegeIds;
         db.books.create(existing);
@@ -249,8 +252,9 @@ const addBookAux = (book) => {
 };
 
 const updateBookAux = (id, book) => {
-    const existing = JSON.parse(JSON.stringify(db.books.get(id)));
-    if (existing !== undefined) {
+    const existingRaw = db.books.get(id);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
         db.books.delete(id);
 
         if (book.name === undefined) {
@@ -284,8 +288,9 @@ const addCollegeAux = (college) => {
     copy.studentIds = undefined;
     const serialised = JSON.stringify(copy);
     const encrypted = crypto.MD5(serialised).toString(crypto.enc.Hex);
-    const existing = JSON.parse(JSON.stringify(db.colleges.get(encrypted)));
-    if (existing !== undefined) {
+    const existingRaw = db.colleges.get(encrypted);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
         db.colleges.delete(existing.id);
         existing.bookIds = college.bookIds;
         existing.studentIds = college.studentIds;
@@ -300,8 +305,9 @@ const addCollegeAux = (college) => {
 };
 
 const updateCollegeAux = (id, college) => {
-    const existing = JSON.parse(JSON.stringify(db.colleges.get(id)));
-    if (existing !== undefined) {
+    const existingRaw = db.colleges.get(id);
+    if (existingRaw !== undefined) {
+        const existing = JSON.parse(JSON.stringify(existingRaw));
         db.colleges.delete(id);
 
         if (college.name === undefined) {
