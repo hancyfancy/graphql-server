@@ -236,6 +236,12 @@ const updateStudentAux = (id, student) => {
 };
 
 const addBookAux = (book) => {
+    book.collegeIds = book.collegeIds.filter(s => s !== "");
+
+    if (book.name === "" || book.author === "") {
+        return;
+    }
+
     const copy = JSON.parse(JSON.stringify(book));
     copy.collegeIds = undefined;
     const serialised = JSON.stringify(copy);
@@ -371,7 +377,7 @@ const Mutation = {
     addBooks: (parent, { books }) => {
         return books.map((book) => {
             return addBookAux(book);
-        });
+        }).filter(s => s !== undefined);
     },
     updateBook: (parent, { id, book }) => {
         return updateBookAux(id, book);
