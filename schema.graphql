@@ -4,7 +4,7 @@ type Query  {
    studentsBy(search: StudentParameters): [Student]!,
    colleges: [College!]!,
    college(id: ID!): College!,
-   collegesBy(search: CollegeParameters): [College]!,
+   collegesBy(search: ReadCollegeParameters): [College]!,
    books: [Book!]!,
    book(id: ID!): Book!,
    booksBy(search: BookParameters): [Book]!,
@@ -67,6 +67,19 @@ input CollegeParameters {
     rating: Float,
     bookIds: [String],
     studentIds: [String]
+}
+
+input ReadCollegeParameters {
+    name: String,
+    location: String,
+    rating: FloatComparer,
+    bookIds: [String],
+    studentIds: [String]
+}
+
+input FloatComparer {
+    comparison: String!,
+    value: Float
 }
 
 input CollegeMutationParameters {

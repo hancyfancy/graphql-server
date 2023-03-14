@@ -101,7 +101,7 @@ const Query = {
 
         const name = search.name;
         const location = search.location;
-        const rating = search.rating;
+        const rating = search.rating.value;
         const bookIds = search.bookIds;
         const studentIds = search.studentIds;
 
