@@ -64,17 +64,17 @@ const Query = {
         let students = [];
 
         if (email != undefined) {
-            const filteredStudents = db.students.list().filter(clg => clg.email === email);
+            const filteredStudents = db.students.list().filter(clg => clg.email.toLowerCase().includes(email.toLowerCase()));
             populateFilteredObjectsAux(students, filteredStudents);
         }
 
         if (firstName != undefined) {
-            const filteredStudents = db.students.list().filter(clg => clg.firstName === firstName);
+            const filteredStudents = db.students.list().filter(clg => clg.firstName.toLowerCase().includes(firstName.toLowerCase()));
             populateFilteredObjectsAux(students, filteredStudents);
         }
 
         if (lastName != undefined) {
-            const filteredStudents = db.students.list().filter(clg => clg.lastName === lastName);
+            const filteredStudents = db.students.list().filter(clg => clg.lastName.toLowerCase().includes(lastName.toLowerCase()));
             populateFilteredObjectsAux(students, filteredStudents);
         }
 
