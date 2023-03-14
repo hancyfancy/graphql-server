@@ -155,12 +155,12 @@ const Query = {
         const books = [];
 
         if (name !== undefined) {
-            const filteredBooks = db.books.list().filter(clg => clg.name === name);
+            const filteredBooks = db.books.list().filter(clg => clg.name.toLowerCase().includes(name.toLowerCase()));
             populateFilteredObjectsAux(books, filteredBooks);
         }
 
         if (author !== undefined) {
-            const filteredBooks = db.books.list().filter(clg => clg.author === author);
+            const filteredBooks = db.books.list().filter(clg => clg.author.toLowerCase().includes(author.toLowerCase()));
             populateFilteredObjectsAux(books, filteredBooks);
 
         }
