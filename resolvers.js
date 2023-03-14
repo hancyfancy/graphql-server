@@ -108,12 +108,12 @@ const Query = {
         let colleges = [];
 
         if (name !== undefined) {
-            const filteredColleges = db.colleges.list().filter(clg => clg.name === name);
+            const filteredColleges = db.colleges.list().filter(clg => clg.name.toLowerCase().includes(name.toLowerCase()));
             populateFilteredObjectsAux(colleges, filteredColleges);
         }
 
         if (location !== undefined) {
-            const filteredColleges = db.colleges.list().filter(clg => clg.location === location);
+            const filteredColleges = db.colleges.list().filter(clg => clg.location.toLowerCase().includes(location.toLowerCase()));
             populateFilteredObjectsAux(colleges, filteredColleges);
         }
 
