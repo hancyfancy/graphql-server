@@ -78,8 +78,16 @@ input ReadCollegeParameters {
 }
 
 input FloatComparer {
-    comparison: String!,
+    comparison: FloatComparator,
     value: Float
+}
+
+enum FloatComparator {
+  lt,
+  lte,
+  eq,
+  gte,
+  gt
 }
 
 input CollegeMutationParameters {
