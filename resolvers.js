@@ -43,6 +43,23 @@ const populateFilteredObjectsAux = (objs, filteredObjs) => {
     });
 };
 
+const filterFloatValueByOperator = (collegesList, rating, operator) => {
+    switch(operator) {
+        case "lt":
+            return collegesList.filter(clg => clg.rating < rating);
+        case "lte":
+            return collegesList.filter(clg => clg.rating <= rating);
+        case "eq":
+            return collegesList.filter(clg => clg.rating === rating);
+        case "gte":
+            return collegesList.filter(clg => clg.rating >= rating);
+        case "gt":
+            return collegesList.filter(clg => clg.rating > rating);
+        default:
+            return collegesList.filter(clg => clg.rating === rating);
+    }
+};
+
 const Query = {
     students: () => {
         const students = db.students.list();
@@ -101,6 +118,7 @@ const Query = {
 
         const name = search.name;
         const location = search.location;
+        const ratingComparisonOperator = search.rating.comparison.toString();
         const rating = search.rating.value;
         const bookIds = search.bookIds;
         const studentIds = search.studentIds;
@@ -118,7 +136,7 @@ const Query = {
         }
 
         if (rating !== undefined) {
-            const filteredColleges = db.colleges.list().filter(clg => clg.rating === rating);
+            const filteredColleges = filterFloatValueByOperator(JSON.parse(JSON.stringify(db.colleges.list())), rating, ratingComparisonOperator);
             populateFilteredObjectsAux(colleges, filteredColleges);
         }
 
